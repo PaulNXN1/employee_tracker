@@ -1,4 +1,4 @@
-DROP DATABASE IF EXIST employee_tracker_db;
+DROP DATABASE IF EXISTS employee_tracker_db;
 CREATE DATABASE employee_tracker_db;  
 
 USE employee_tracker_db; 
@@ -32,7 +32,7 @@ id INT PRIMARY KEY AUTO_INCREMENT,
 first_name VARCHAR(30),
 last_name VARCHAR(30),
 role_id INT NOT NULL,
-manager_id INT
+manager_id INT,
 FOREIGN KEY (role_id)
 REFERENCES role(id)
 ON DELETE CASCADE,

@@ -12,9 +12,12 @@ app.get('/', (req, res) => {
     console.log('Hi');
     // res.json({ message: 'Hi'});
    // res.send('Welcome!'); For testing
-    res.render('index');
+    res.render('index' , {text: 'World!'});
 
 });
+
+
+
 
 
 // Makes the server run. 
