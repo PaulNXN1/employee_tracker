@@ -1,6 +1,8 @@
 const inquirer = require('inquirer');
 const mysql = require('mysql2');
 
+// Creating the mysql2 connection // 
+
 const connection = mysql.createConnection({
   host: 'localhost',
   user: 'root',
@@ -8,6 +10,9 @@ const connection = mysql.createConnection({
   database: 'employee_tracker_db'
 });
 
+
+
+// Question array that displays for the user when the application starts. 
 const questions = [
 
   {
@@ -17,6 +22,13 @@ const questions = [
     name: 'user_choice',
   }];
 
+
+// functions that take place after user selects which item to proceed with from the "questions" array. 
+
+
+// DONE
+
+// Once selected, the user will be able to see all current roles in the database: employee_tracler.db 
 
 function viewDepartments() {
 
@@ -31,6 +43,8 @@ function viewDepartments() {
 
 };
 
+// DONE
+// Once selected, the user will be able to see all current roles in the database: employee_tracler.db 
 
 function viewRoles() {
 
@@ -45,6 +59,8 @@ function viewRoles() {
 
 };
 
+// DONE
+// Once selected, the user will be able to see all current employees in the database: employee_tracler.db 
 
 function viewEmployees() {
 
@@ -59,7 +75,8 @@ function viewEmployees() {
 
 };
 
-
+// DONE
+// Once selected, the user will be able to add a new department(s) in the database: employee_tracler.db 
 
 function addDepartment() {
 
@@ -71,7 +88,7 @@ function addDepartment() {
   }]).then(function (answers) {
 
     connection.query(
-      "INSERT INTO department (name) VALUES (?)", [answers.departmentName] , function (err, results, fields) {
+      "INSERT INTO department (name) VALUES (?)", [answers.departmentName], function (err, results, fields) {
         console.table(results); // results contains rows returned by server
 
         init();
@@ -79,115 +96,122 @@ function addDepartment() {
 
     )
   })
-
-
-
-  // connection.query(
-  //   'SELECT * FROM department',
-  //   function (err, results, fields) {
-  //     console.table(results); // results contains rows returned by server
-
-  //     init();
-  //   }
-  // );
-
 };
 
+
+// Once selected, the user will be able to add a role in the database: employee_tracler.db
 
 function addRole() {
 
-  connection.query(
-    'SELECT * FROM department',
-    function (err, results, fields) {
-      console.table(results); // results contains rows returned by server
+  inquirer.prompt([{
+    type: 'input',
+    message: 'What is the name of new role?',
+    name: 'newRole'
+  }])
+  
+  .then (function(answers) {
 
-      init();
-    }
-  );
+    connection.query(
+      "INSERT INTO role (name) VALUES (?)", [answers.newRole], function (err, results, fields) {
 
-};
+        console.table(results); // results contains rows returned by server
 
+        init();
 
-function addEmployee() {
-
-  connection.query(
-    'SELECT * FROM department',
-    function (err, results, fields) {
-      console.table(results); // results contains rows returned by server
-
-      init();
-    }
-  );
-
-};
+      })})};
 
 
-function updateRole() {
+  function addEmployee() {
 
-  connection.query(
-    'SELECT * FROM department',
-    function (err, results, fields) {
-      console.table(results); // results contains rows returned by server
+    inquirer.prompt([{
+      type: 'input',
+      message: 'What is the name of new employee?',
+      name: 'newEmployee'
+    }])
 
-      init();
-    }
-  );
+    .then (function(answers) {
 
-};
+      connection.query(
+        "INSERT INTO employee (name) VALUES (?)", [answers.newEmployee], function (err, results, fields) {
+  
+          console.log(results); // results contains rows returned by server
+  
+          init();
+  
+        })})
+    
 
-
-
-// function that starts the prompt to the user using node.js
-function init() {
-
-  inquirer.prompt(questions)
-
-    .then(function (answers) {
-
-      switch (answers.user_choice) {
-        case 'View all departments':
-          console.log('\nViewing departments...\n\n');
-          viewDepartments();
-          break;
+  };
 
 
-        case 'View all roles':
-          console.log('\nViewing all roles...\n\n');
-          viewRoles();
-          break;
+  function updateRole() {
 
-        case 'View all employees':
-          console.log('\nViewing all employees...\n\n');
-          viewEmployees();
-          break;
+    connection.query(
+      'SELECT * FROM department',
+      function (err, results, fields) {
+        console.table(results); // results contains rows returned by server
 
-        case 'Add a department':
-          console.log('\nAdding a department...\n\n');
-          addDepartment();
+        init();
+      }
+    );
 
-          break;
-
-        case 'Add a role':
-          console.log('\nAdding a role...\n\n');
-          break;
-
-
-        case 'Add an employee':
-          console.log('\nAdding an employee...\n\n');
-          break;
-
-        case 'Update an employee role':
-          console.log('\nUpdating role...\n\n');
-          break;
-
-
-      };
+  };
 
 
 
+  // function that starts the prompt to the user using node.js
+  function init() {
+
+    inquirer.prompt(questions)
+
+      .then(function (answers) {
+
+        switch (answers.user_choice) {
+          case 'View all departments':
+            console.log('\nViewing departments...\n\n');
+            viewDepartments();
+            break;
 
 
-    })
-};
+          case 'View all roles':
+            console.log('\nViewing all roles...\n\n');
+            viewRoles();
+            break;
 
-init();
+          case 'View all employees':
+            console.log('\nViewing all employees...\n\n');
+            viewEmployees();
+            break;
+
+          case 'Add a department':
+            console.log('\nAdding a department...\n\n');
+            addDepartment();
+
+            break;
+
+          case 'Add a role':
+            console.log('\nAdding a role...\n\n');
+            addRole();
+            break;
+
+
+          case 'Add an employee':
+            console.log('\nAdding an employee...\n\n');
+            addEmployee();
+            break;
+
+          case 'Update an employee role':
+            console.log('\nUpdating role...\n\n');
+            break;
+
+
+        };
+
+
+
+
+
+      })
+  };
+
+  init();
