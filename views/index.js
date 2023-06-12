@@ -107,12 +107,23 @@ function addRole() {
     type: 'input',
     message: 'What is the name of new role?',
     name: 'newRole'
-  }])
+  },
+
+  {type: 'input',
+  message: 'What is the salary?',
+  name: 'salary'},
+
+  {type: 'input',
+  message: 'What is the department ID?',
+  name: 'department_id',
+  choices: [1,2,3,4,5]
+  }
+])
   
   .then (function(answers) {
 
     connection.query(
-      "INSERT INTO role (name) VALUES (?)", [answers.newRole], function (err, results, fields) {
+      "INSERT INTO role (title, salary, department_id) VALUES (?,?,?)", [answers.newRole, answers.salary, answers.department_id], function (err, results, fields) {
 
         console.table(results); // results contains rows returned by server
 
