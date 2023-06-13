@@ -136,14 +136,28 @@ function addRole() {
 
     inquirer.prompt([{
       type: 'input',
-      message: 'What is the name of new employee?',
-      name: 'newEmployee'
-    }])
+      message: 'What is the first name of new employee?',
+      name: 'first_name'
+    },
+
+    {type: 'input',
+     message: 'What is the last name?',
+     name: 'last_name'},
+
+
+     {type: 'input',
+     message: 'What department does this new hire work in?',
+     choices: [1,2,3,4],
+     name: 'newDept'
+    },
+  
+
+  ])
 
     .then (function(answers) {
 
       connection.query(
-        "INSERT INTO employee (name) VALUES (?)", [answers.newEmployee], function (err, results, fields) {
+        "INSERT INTO employee (first_name, last_name, role_id)) VALUES (?,?,?)", [answers.first_name, answers.last_name, answers.newDept], function (err, results, fields) {
   
           console.log(results); // results contains rows returned by server
   
@@ -183,7 +197,6 @@ function addRole() {
             viewDepartments();
             break;
 
-
           case 'View all roles':
             console.log('\nViewing all roles...\n\n');
             viewRoles();
@@ -197,13 +210,12 @@ function addRole() {
           case 'Add a department':
             console.log('\nAdding a department...\n\n');
             addDepartment();
-
             break;
 
           case 'Add a role':
             console.log('\nAdding a role...\n\n');
             addRole();
-            break;
+            break; 
 
 
           case 'Add an employee':
@@ -213,6 +225,7 @@ function addRole() {
 
           case 'Update an employee role':
             console.log('\nUpdating role...\n\n');
+            updateRole();
             break;
 
 
