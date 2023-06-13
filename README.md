@@ -28,5 +28,8 @@ The project is complete when all Module #12 assignment criteria are met.
 
 URL to the GitHub Repository:  https://github.com/PaulNXN1/employee_tracker
 
-**Video** example of the assignment [below]:
+Video example of the assignment [below]:
+
+https://github.com/PaulNXN1/employee_tracker/assets/84299358/91474e6b-5609-4dcc-8ee3-234f5e5c3745
+
 
