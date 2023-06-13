@@ -26,6 +26,7 @@ The project is complete when all Module #12 assignment criteria are met.
 
 ## Deployment
 
-URL to the GitHub Repository:
+URL to the GitHub Repository:  https://github.com/PaulNXN1/employee_tracker
 
-Video example of the assignment:
+**Video** example of the assignment [below]:
+
